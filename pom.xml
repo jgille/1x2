@@ -12,6 +12,7 @@
         <jdk.version>1.7</jdk.version>
 
         <dw.version>0.7.1</dw.version>
+        <stormpath.version>1.0.RC2</stormpath.version>
     </properties>
 
     <dependencies>
@@ -26,6 +27,25 @@
             <groupId>io.dropwizard</groupId>
             <artifactId>dropwizard-assets</artifactId>
             <version>${dw.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-api</artifactId>
+            <version>${stormpath.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-impl</artifactId>
+            <version>${stormpath.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.stormpath.sdk</groupId>
+            <artifactId>stormpath-sdk-httpclient</artifactId>
+            <version>${stormpath.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>
