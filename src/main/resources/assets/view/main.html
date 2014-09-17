@@ -1,0 +1,14 @@
+<div ng-controller="Bet1x2Controller" ng-app="bet-1x2">
+    <div class="container-fluid">
+        <navigation></navigation>
+
+        <div class="loginForm" ng-hide="isLoggedIn()">
+            <login></login>
+        </div>
+        <div ng-show="isLoggedIn()">
+            {{ greeting }}
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,20 @@
+server:
+  applicationConnectors:
+    - type: http
+      port: 8070
+
+  adminConnectors:
+    - type: http
+      port: 9070
+
+# Logging settings.
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+  # Logger-specific levels.
+  loggers:
+    org.jon.ivmark: DEBUG
+
+  appenders:
+    - type: console
+      threshold: ALL
