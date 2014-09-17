@@ -1,8 +1,43 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="pull-right">
-            {{ greeting }}
-            <button class="btn btn-link" ng-click="logout()">Logga ut</button>
-        </div>
+<div class="rounds">
+    <div ng-repeat="round in data.rounds">
+        <fieldset>
+            <legend>{{ round.name }}</legend>
+            <table class="games">
+                <tr>
+                    <th colspan="4"></th>
+                    <th>1</th>
+                    <th>X</th>
+                    <th>2</th>
+                </tr>
+                <tr ng-if="isAdmin()" ng-repeat="game in round.games">
+                    <td>{{ game.id }}.</td>
+                    <td><input type="text" ng-model="game.home"/></td>
+                    <td>-</td>
+                    <td><input type="text" ng-model="game.away"/></td>
+                    <div class="input-group">
+                        <td><input type="radio" ng-model="game.result" value="1"></td>
+                        <td><input type="radio" ng-model="game.result" value="X"></td>
+                        <td><input type="radio" ng-model="game.result" value="2"></td>
+                    </div>
+                    </td>
+                </tr>
+                <tr ng-if="!isAdmin()" ng-repeat="game in round.games">
+                    <td>{{ game.id }}.</td>
+                    <td>{{ game.home }}</td>
+                    <td>-</td>
+                    <td>{{ game.away }}</td>
+                    <div class="input-group">
+                        <td><input type="radio" ng-disabled="true" ng-model="game.result" value="1"></td>
+                        <td><input type="radio" ng-disabled="true" ng-model="game.result" value="X"></td>
+                        <td><input type="radio" ng-disabled="true" ng-model="game.result" value="2"></td>
+                    </div>
+                    </td>
+                </tr>
+                <tr ng-if="isAdmin()">
+                    <td colspan="7"><button class="btn btn-primary pull-right" ng-click="saveRound($index)">Spara</button></td>
+                </tr>
+            </table>
+
+        </fieldset>
     </div>
-</nav>
+</div>

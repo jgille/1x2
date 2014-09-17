@@ -6,6 +6,7 @@ import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.application.Application;
 import com.stormpath.sdk.group.Group;
 import com.stormpath.sdk.impl.jwt.signer.JwtSigner;
+import org.jon.ivmark.bet1x2.login.JwtService;
 import org.jon.ivmark.bet1x2.login.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,11 @@ public class AuthenticatorResource {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Application application;
-    private final JwtSigner jwtSigner;
-    private final ObjectMapper objectMapper;
+    private final JwtService jwtService;
 
-    public AuthenticatorResource(Application application, JwtSigner jwtSigner, ObjectMapper objectMapper) {
+    public AuthenticatorResource(Application application, JwtService jwtService) {
         this.application = application;
-        this.jwtSigner = jwtSigner;
-        this.objectMapper = objectMapper;
+        this.jwtService = jwtService;
     }
 
     @GET
@@ -43,10 +42,7 @@ public class AuthenticatorResource {
         String baseUri = uriInfo.getBaseUri().toString();
         String uri = baseUri.replaceAll("/api", "");
 
-        String json = objectMapper.writeValueAsString(user);
-        String token = jwtSigner.sign(json);
-        Cookie jwt = new Cookie("jwt", token, "/", null);
-        NewCookie cookie = new NewCookie(jwt);
+        NewCookie cookie = jwtService.userCookie(user);
         return Response.status(302)
                        .location(URI.create(uri))
                        .cookie(cookie)

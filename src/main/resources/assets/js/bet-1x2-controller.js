@@ -2,6 +2,113 @@ var app = angular.module('bet1x2');
 
 app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $cookies) {
 
+    $scope.data = {
+        rounds: [
+            {
+                round_id: '1',
+                name: 'CL Gruppspel, omgång 2',
+                games: [
+                    {
+                        id: '1',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '2',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '3',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '4',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '5',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '6',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '7',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '8',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '9',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '10',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '11',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '12',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '13',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '14',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '2'
+                    },
+                    {
+                        id: '15',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    },
+                    {
+                        id: '16',
+                        home: 'Hemmalag',
+                        away: 'Bortalag',
+                        result: '1'
+                    }
+                ]
+            }
+        ]
+    };
+
     var getJwt = function () {
         return $cookies.jwt;
     }
@@ -12,7 +119,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
     };
 
     var decodeBase64 = function (s) {
-        var e = {}, i, k, v = [], r = '', w = String.fromCharCode;
+        var e = {}, i, v = [], r = '', w = String.fromCharCode;
         var n = [
             [65, 91],
             [97, 123],
@@ -60,6 +167,14 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
         $cookies.jwt = '';
         $scope.load();
     };
+
+    $scope.isAdmin = function () {
+        return true;
+    }
+
+    $scope.saveRound = function (roundIndex) {
+        alert(JSON.stringify($scope.data.rounds[roundIndex]));
+    }
 
     $scope.load();
 }

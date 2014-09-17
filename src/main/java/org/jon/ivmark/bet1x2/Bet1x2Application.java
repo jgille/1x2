@@ -10,6 +10,7 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.jon.ivmark.bet1x2.login.JwtService;
 import org.jon.ivmark.bet1x2.login.resources.AuthenticatorResource;
 import org.jon.ivmark.bet1x2.login.resources.LoginResource;
 
@@ -35,9 +36,11 @@ public class Bet1x2Application extends Application<Bet1x2Config> {
         com.stormpath.sdk.application.Application application =
                 client.getResource(applicationRestUrl, com.stormpath.sdk.application.Application.class);
 
-        environment.jersey().register(new LoginResource(application));
         JwtSigner jwtSigner =  new DefaultJwtSigner(config.jwtSecret);
-        environment.jersey().register(new AuthenticatorResource(application, jwtSigner, environment.getObjectMapper()));
+        JwtService jwtService = new JwtService(jwtSigner, environment.getObjectMapper());
+
+        environment.jersey().register(new LoginResource(application, jwtService));
+        environment.jersey().register(new AuthenticatorResource(application, jwtService));
 
     }
 }

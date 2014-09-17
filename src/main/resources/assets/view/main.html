@@ -1,10 +1,6 @@
 <div ng-controller="Bet1x2Controller" ng-app="bet-1x2">
+    <navbar></navbar>
     <div class="container-fluid">
-        <navigation></navigation>
-
-        <div class="loginForm" ng-hide="isLoggedIn">
-            <login></login>
-        </div>
         <div ng-show="isLoggedIn">
             <bet1x2></bet1x2>
         </div>

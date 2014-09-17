@@ -7,10 +7,10 @@ app
             templateUrl: '/view/main.html'
         };
     })
-    .directive('login', function () {
+    .directive('navbar', function () {
         return {
             restrict: 'E',
-            templateUrl: '/view/login.html'
+            templateUrl: '/view/navbar.html'
         };
     })
     .directive('bet1x2', function () {
