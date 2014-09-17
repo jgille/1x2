@@ -1,7 +1,12 @@
 package org.jon.ivmark.bet1x2.login.resources;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stormpath.sdk.account.Account;
 import com.stormpath.sdk.application.Application;
+import com.stormpath.sdk.group.Group;
+import com.stormpath.sdk.impl.jwt.signer.JwtSigner;
+import org.jon.ivmark.bet1x2.login.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.*;
-import java.awt.image.PixelGrabber;
 import java.net.URI;
+import java.util.ArrayList;
 
 @Path("authenticate")
 public class AuthenticatorResource {
@@ -18,24 +23,44 @@ public class AuthenticatorResource {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final Application application;
+    private final JwtSigner jwtSigner;
+    private final ObjectMapper objectMapper;
 
-    public AuthenticatorResource(Application application) {
+    public AuthenticatorResource(Application application, JwtSigner jwtSigner, ObjectMapper objectMapper) {
         this.application = application;
+        this.jwtSigner = jwtSigner;
+        this.objectMapper = objectMapper;
     }
 
     @GET
-    public Response authenticate(@Context HttpServletRequest request, @Context UriInfo uriInfo) {
+    public Response authenticate(@Context HttpServletRequest request, @Context UriInfo uriInfo)
+            throws JsonProcessingException {
         logger.info("Authenticating...");
 
         Account account = application.newIdSiteCallbackHandler(request).getAccountResult().getAccount();
+        User user = userFromAccount(account);
 
         String baseUri = uriInfo.getBaseUri().toString();
         String uri = baseUri.replaceAll("/api", "");
-        Cookie jwt = new Cookie("jwt", account.getUsername(), "/", null);
+
+        String json = objectMapper.writeValueAsString(user);
+        String token = jwtSigner.sign(json);
+        Cookie jwt = new Cookie("jwt", token, "/", null);
         NewCookie cookie = new NewCookie(jwt);
         return Response.status(302)
                        .location(URI.create(uri))
                        .cookie(cookie)
                        .build();
     }
+
+    private User userFromAccount(Account account) {
+        User user = new User();
+        user.username = account.getUsername();
+        user.groups = new ArrayList<>();
+        for (Group group : account.getGroups()) {
+             user.groups.add(group.getName());
+        }
+        return user;
+    }
+
 }

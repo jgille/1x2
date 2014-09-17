@@ -4,6 +4,8 @@ import com.stormpath.sdk.api.ApiKey;
 import com.stormpath.sdk.api.ApiKeys;
 import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.client.Clients;
+import com.stormpath.sdk.impl.jwt.signer.DefaultJwtSigner;
+import com.stormpath.sdk.impl.jwt.signer.JwtSigner;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -34,7 +36,8 @@ public class Bet1x2Application extends Application<Bet1x2Config> {
                 client.getResource(applicationRestUrl, com.stormpath.sdk.application.Application.class);
 
         environment.jersey().register(new LoginResource(application));
-        environment.jersey().register(new AuthenticatorResource(application));
+        JwtSigner jwtSigner =  new DefaultJwtSigner(config.jwtSecret);
+        environment.jersey().register(new AuthenticatorResource(application, jwtSigner, environment.getObjectMapper()));
 
     }
 }
