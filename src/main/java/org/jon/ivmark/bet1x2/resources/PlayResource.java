@@ -16,12 +16,17 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Path("myplays")
 public class PlayResource {
 
+    private static final int MAX_NUM_ROWS = 72;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final RoundRepository roundRepository;
@@ -40,15 +45,20 @@ public class PlayResource {
         return merge(rounds, plays);
     }
 
-    @POST
-    public Response savePlays(@Auth User user, List<RoundPlayDto> plays) {
-        logger.info("Saving plays for {}", user.username);
+    private void savePlays(User user, List<RoundPlayDto> plays) {
         playRepository.savePlays(user, plays);
-        return Response.ok().build();
     }
 
     @PUT
     public Response savePlay(@Auth User user, RoundPlayDto play) {
+        if (play.numPlayedRows() > MAX_NUM_ROWS) {
+            return Response.status(403).build();
+        }
+
+        if (isAfterCutOff(play.cut_off)) {
+            return Response.status(403).build();
+        }
+
         logger.info("Saving play for {}", user.username);
         List<RoundPlayDto> plays = getPlays(user);
 
@@ -70,11 +80,20 @@ public class PlayResource {
             return playsFromRounds(rounds);
         }
         int i = 0;
-        for (RoundPlayDto roundPlayDto : plays) {
-            RoundDto roundDto = rounds.get(i++);
+        for (RoundDto roundDto : rounds) {
+            if (plays.size() <= i) {
+                RoundPlayDto playDto = new RoundPlayDto();
+                playDto.plays = new ArrayList<>(roundDto.games.size());
+                for (GameDto gameDto : roundDto.games) {
+                    playDto.plays.add(new PlayDto());
+                }
+                plays.add(playDto);
+            }
+            RoundPlayDto roundPlayDto = plays.get(i++);
             roundPlayDto.round_id = roundDto.round_id;
             roundPlayDto.name = roundDto.name;
             roundPlayDto.cut_off = roundDto.cut_off;
+            roundPlayDto.may_submit_play = !isAfterCutOff(roundPlayDto.cut_off);
 
             int j = 0;
 
@@ -108,4 +127,24 @@ public class PlayResource {
         }
         return roundPlayDto;
     }
+
+    private long cutOff(String dateString) throws ParseException {
+        TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        df.setTimeZone(tz);
+        Date date = df.parse(dateString);
+
+        return date.getTime();
+    }
+
+    private boolean isAfterCutOff(String dateString) {
+        long cutOff;
+        try {
+            cutOff = cutOff(dateString);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException("Illegal date string", e);
+        }
+        return cutOff < System.currentTimeMillis();
+    }
 }
+

@@ -22,13 +22,17 @@
                     </div>
                     </td>
                 </tr>
-                <td colspan="7">
-                    <div class="pull-right">
-                        <button class="btn btn-primary" ng-click="savePlay($index)">
-                            Spara
-                        </button>
-                    </div>
-                </td>
+                <tr>
+                    <td>{{numPlayedRows($index)}}</td>
+                    <td colspan="6">
+                        <div class="pull-right">
+                            <button ng-disabled="mayNotSubmitPlay($index)" class="btn btn-primary"
+                                    ng-click="savePlay($index)">
+                                Spara
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </table>
 
         </fieldset>

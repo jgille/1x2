@@ -2,6 +2,8 @@ var app = angular.module('bet1x2');
 
 app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($scope, $cookies, $http) {
 
+    $scope.maxNumRows = 72;
+
     $scope.input = {
         newRound: {
             numGames: 16,
@@ -135,6 +137,33 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
             .error(function () {
                 alert("Something went wrong!");
             });
+    };
+
+    $scope.mayNotSubmitPlay = function (playIndex) {
+        var numPlayedRows = $scope.numPlayedRows(playIndex);
+        return !$scope.data.myplays[playIndex].may_submit_play ||
+            numPlayedRows == 0 || numPlayedRows > $scope.maxNumRows;
+    };
+
+    $scope.numPlayedRows = function (playIndex) {
+        var myplay = $scope.data.myplays[playIndex];
+
+        var total = 1;
+        for (var index = 0; index < myplay.plays.length; index++) {
+            var play = myplay.plays[index];
+            var num = 0;
+            if (play.one) {
+                num++;
+            }
+            if (play.x) {
+                num++;
+            }
+            if (play.two) {
+                num++;
+            }
+            total *= num;
+        }
+        return total;
     };
 
     $scope.load();
