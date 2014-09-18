@@ -1,7 +1,9 @@
 <div class="results container">
     <div ng-repeat="round in data.rounds">
-        <input ng-if="isAdmin()" type="text" ng-model="round.name">
-        <input ng-if="isAdmin()" type="text" ng-model="round.cut_off">
+        <div class="nameAndCutOff" ng-if="isAdmin()">
+            <input type="text" ng-model="round.name">
+            <input type="text" ng-model="round.cut_off">
+        </div>
         <fieldset>
             <legend>{{round.name}}</legend>
             <i>Sista speldatum: {{round.cut_off}}</i>
@@ -45,11 +47,17 @@
                         </div>
                     </td>
                 </tr>
+                <tr ng-if="isLastRound($index)">
+                    <td colspan="7">
+                        <div class="pull-right">
+                            <button class="btn btn-primary" ng-click="saveRounds()">Spara</button>
+                        </div>
+                    </td>
+                </tr>
             </table>
 
         </fieldset>
     </div>
-    <button class="btn btn-primary" ng-click="saveRounds()">Spara</button>
 
     <form ng-if="isAdmin()" class="form-inline add-round" role="form">
         <div class="form-group">

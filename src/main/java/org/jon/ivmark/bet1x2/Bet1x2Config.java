@@ -4,4 +4,5 @@ import io.dropwizard.Configuration;
 
 public class Bet1x2Config extends Configuration {
     public String jwtSecret = "secret";
+    public String dataDir = "data";
 }
