@@ -16,14 +16,27 @@
                     <td>-</td>
                     <td>{{ play.game.away }}</td>
                     <div class="input-group">
-                        <td><input type="checkbox" ng-model="play.one"></td>
-                        <td><input type="checkbox" ng-model="play.x"></td>
-                        <td><input type="checkbox" ng-model="play.two"></td>
+                        <td>
+                            <div ng-class="(play.game.result=='1') ? 'correct' : ''">
+                                <input type="checkbox" ng-model="play.one">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div ng-class="(play.game.result=='X') ? 'correct' : ''">
+                                <input type="checkbox" ng-model="play.x">
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="(play.game.result=='2') ? 'correct' : ''">
+                                <input type="checkbox" ng-model="play.two">
+                            </div>
+                        </td>
                     </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>{{numPlayedRows($index)}}</td>
+                    <td>Antal rader: {{numPlayedRows($index)}}</td>
                     <td colspan="6">
                         <div class="pull-right">
                             <button ng-disabled="mayNotSubmitPlay($index)" class="btn btn-primary"

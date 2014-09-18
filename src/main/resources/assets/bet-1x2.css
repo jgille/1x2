@@ -22,6 +22,10 @@
     padding-top: 15px;
 }
 
+.correct {
+    background-color: green;
+}
+
 .add-round {
     margin-top: 25px;
 }
