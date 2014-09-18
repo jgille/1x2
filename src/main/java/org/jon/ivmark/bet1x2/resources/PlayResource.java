@@ -75,7 +75,7 @@ public class PlayResource {
         return Response.ok().build();
     }
 
-    private List<RoundPlayDto> merge(List<RoundDto> rounds, List<RoundPlayDto> plays) {
+    public static List<RoundPlayDto> merge(List<RoundDto> rounds, List<RoundPlayDto> plays) {
         if (plays.isEmpty()) {
             return playsFromRounds(rounds);
         }
@@ -104,7 +104,7 @@ public class PlayResource {
         return plays;
     }
 
-    private List<RoundPlayDto> playsFromRounds(List<RoundDto> rounds) {
+    private static List<RoundPlayDto> playsFromRounds(List<RoundDto> rounds) {
         List<RoundPlayDto> plays = new ArrayList<>(rounds.size());
         for (RoundDto roundDto : rounds) {
             plays.add(playsFromRound(roundDto));
@@ -112,7 +112,7 @@ public class PlayResource {
         return plays;
     }
 
-    private RoundPlayDto playsFromRound(RoundDto roundDto) {
+    private static RoundPlayDto playsFromRound(RoundDto roundDto) {
         RoundPlayDto roundPlayDto = new RoundPlayDto();
         roundPlayDto.cut_off = roundDto.cut_off;
         roundPlayDto.name = roundDto.name;
@@ -128,7 +128,7 @@ public class PlayResource {
         return roundPlayDto;
     }
 
-    private long cutOff(String dateString) throws ParseException {
+    private static long cutOff(String dateString) throws ParseException {
         TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(tz);
@@ -137,7 +137,7 @@ public class PlayResource {
         return date.getTime();
     }
 
-    private boolean isAfterCutOff(String dateString) {
+    private static boolean isAfterCutOff(String dateString) {
         long cutOff;
         try {
             cutOff = cutOff(dateString);

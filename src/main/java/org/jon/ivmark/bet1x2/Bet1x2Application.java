@@ -8,7 +8,6 @@ import com.stormpath.sdk.impl.jwt.signer.DefaultJwtSigner;
 import com.stormpath.sdk.impl.jwt.signer.JwtSigner;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
-import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.oauth.OAuthProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -16,6 +15,7 @@ import org.jon.ivmark.bet1x2.login.JwtAuthenticator;
 import org.jon.ivmark.bet1x2.login.JwtService;
 import org.jon.ivmark.bet1x2.login.resources.AuthenticatorResource;
 import org.jon.ivmark.bet1x2.login.resources.LoginResource;
+import org.jon.ivmark.bet1x2.resources.AllPlaysResource;
 import org.jon.ivmark.bet1x2.resources.PlayResource;
 import org.jon.ivmark.bet1x2.resources.RoundResource;
 
@@ -51,6 +51,7 @@ public class Bet1x2Application extends Application<Bet1x2Config> {
         PlayRepository playRepository = new FilePlayRepository(config.dataDir, environment.getObjectMapper());
         environment.jersey().register(new RoundResource(roundRepository));
         environment.jersey().register(new PlayResource(roundRepository, playRepository));
+        environment.jersey().register(new AllPlaysResource(roundRepository, playRepository, environment.getObjectMapper()));
 
         JwtAuthenticator jwtAuthenticator = new JwtAuthenticator(jwtSigner, environment.getObjectMapper());
         environment.jersey().register(new OAuthProvider<>(jwtAuthenticator, "realm"));
