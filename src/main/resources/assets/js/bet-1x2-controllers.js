@@ -1,12 +1,12 @@
 var app = angular.module('bet1x2');
 
-app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $cookies) {
+app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($scope, $cookies, $http) {
 
     $scope.input = {
         newRound: {
             numGames: 16,
             name: 'Omgång X',
-            cutOff: '2014-09-30 20:30:00'
+            cut_off: '2014-09-30 20:30:00'
         }
     }
 
@@ -64,6 +64,8 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
             var token = getJwt();
             var json = JSON.parse(decodeBase64(token.split('.')[1]));
             $scope.greeting = 'Välkommen ' + json.username;
+
+            $scope.loadRounds();
         } else {
             $scope.greeting = '';
         }
@@ -78,8 +80,17 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
         return true;
     }
 
-    $scope.saveRound = function (roundIndex) {
-        alert(JSON.stringify($scope.data.rounds[roundIndex]));
+    $scope.saveRounds = function () {
+        $http.post('/api/rounds', $scope.data.rounds).success(function () {
+        }).error(function () {
+                alert("Something went wrong!");
+            });
+    }
+
+    $scope.loadRounds = function () {
+        $http.get('/api/rounds').success(function (data) {
+            $scope.data.rounds = data;
+        });
     }
 
     $scope.popRound = function () {
@@ -104,7 +115,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
             {
                 round_id: $scope.data.rounds.length + '',
                 name: $scope.input.newRound.name,
-                cutOff: $scope.input.newRound.cutOff,
+                cut_off: $scope.input.newRound.cut_off,
                 games: games
             }
         );

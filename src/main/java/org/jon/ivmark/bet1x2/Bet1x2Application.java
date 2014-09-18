@@ -13,6 +13,7 @@ import io.dropwizard.setup.Environment;
 import org.jon.ivmark.bet1x2.login.JwtService;
 import org.jon.ivmark.bet1x2.login.resources.AuthenticatorResource;
 import org.jon.ivmark.bet1x2.login.resources.LoginResource;
+import org.jon.ivmark.bet1x2.resources.RoundResource;
 
 public class Bet1x2Application extends Application<Bet1x2Config> {
 
@@ -41,6 +42,6 @@ public class Bet1x2Application extends Application<Bet1x2Config> {
 
         environment.jersey().register(new LoginResource(application, jwtService));
         environment.jersey().register(new AuthenticatorResource(application, jwtService));
-
+        environment.jersey().register(new RoundResource());
     }
 }
