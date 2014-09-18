@@ -1,0 +1,52 @@
+<div class="allplays container">
+    <div class="dropdown">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+            Välj omgång <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <div ng-repeat="round in data.rounds">
+                <li ng-show="round.completed"><div ng-click="selectRound($index)">{{round.name}}</div></li>
+            </div>
+        </ul>
+    </div>
+    <h4>{{data.rounds[data.allplays.selectedRound].name}}</h4>
+    <div ng-repeat="(username, rows) in data.allplays">
+        {{ username }}
+
+        <div ng-repeat="row in rows">
+            <table ng-show="data.allplays.selectedRound == $index" class="games">
+                <tr>
+                    <th colspan="4"></th>
+                    <th>1</th>
+                    <th>X</th>
+                    <th>2</th>
+                </tr>
+                <tr ng-repeat="play in row.plays">
+                    <td>{{ play.game.id }}.</td>
+                    <td>{{ play.game.home }}</td>
+                    <td>-</td>
+                    <td>{{ play.game.away }}</td>
+                    <div class="input-group">
+                        <td>
+                            <div ng-class="(play.game.result=='1') ? 'correct' : ''">
+                                <input type="checkbox" ng-disabled="true" ng-model="play.one">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div ng-class="(play.game.result=='X') ? 'correct' : ''">
+                                <input type="checkbox" ng-disabled="true" ng-model="play.x">
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-class="(play.game.result=='2') ? 'correct' : ''">
+                                <input type="checkbox" ng-disabled="true" ng-model="play.two">
+                            </div>
+                        </td>
+                    </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

@@ -22,8 +22,17 @@
     padding-top: 15px;
 }
 
+
+.allplays td {
+    padding-right: 15px;
+}
+
+.allplays legend {
+    padding-top: 15px;
+}
+
 .correct {
-    background-color: green;
+    background: #449D44;
 }
 
 .add-round {

@@ -41,7 +41,11 @@ public class FileRoundRepository implements RoundRepository {
     @Override
     public List<RoundDto> getRounds() {
         try {
-            return objectMapper.readValue(dataFile, new TypeReference<List<RoundDto>>() {});
+            List<RoundDto> rounds = objectMapper.readValue(dataFile, new TypeReference<List<RoundDto>>() {});
+            for (RoundDto roundDto : rounds) {
+                roundDto.completed = Cutoff.isAfterCutOff(roundDto.cut_off);
+            }
+            return rounds;
         } catch (IOException e) {
             // TODO: Handle this better
             throw new RuntimeException("Failed to get rounds", e);

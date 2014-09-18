@@ -1,6 +1,6 @@
 <div class="myplays container">
     <div ng-repeat="myplay in data.myplays">
-        <fieldset ng-show="myplay.may_submit_play">
+        <fieldset ng-hide="!myplay.may_submit_play">
             <legend>{{myplay.name}}</legend>
             <i>Sista speldatum: {{myplay.cut_off}}</i>
             <table class="games">
@@ -16,28 +16,22 @@
                     <td>-</td>
                     <td>{{ play.game.away }}</td>
                     <div class="input-group">
-                        <td>
-                            <div ng-class="(play.game.result=='1') ? 'correct' : ''">
-                                <input type="checkbox" ng-model="play.one">
-                            </div>
+                        <td ng-class="(play.game.result=='1') ? 'correct' : ''">
+                            <input type="checkbox" ng-model="play.one">
                         </td>
 
-                        <td>
-                            <div ng-class="(play.game.result=='X') ? 'correct' : ''">
-                                <input type="checkbox" ng-model="play.x">
-                            </div>
+                        <td ng-class="(play.game.result=='X') ? 'correct' : ''">
+                            <input type="checkbox" ng-model="play.x">
                         </td>
-                        <td>
-                            <div ng-class="(play.game.result=='2') ? 'correct' : ''">
-                                <input type="checkbox" ng-model="play.two">
-                            </div>
+                        <td ng-class="(play.game.result=='2') ? 'correct' : ''">
+                            <input type="checkbox" ng-model="play.two">
                         </td>
                     </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>Antal rader: {{numPlayedRows($index)}}</td>
-                    <td colspan="6">
+                    <td colspan="3">Antal rader: {{numPlayedRows($index)}}</td>
+                    <td colspan="4">
                         <div class="pull-right">
                             <button ng-disabled="mayNotSubmitPlay($index)" class="btn btn-primary"
                                     ng-click="savePlay($index)">

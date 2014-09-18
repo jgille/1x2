@@ -12,16 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+
+import static org.jon.ivmark.bet1x2.Cutoff.isAfterCutOff;
 
 @Path("myplays")
 public class PlayResource {
@@ -127,24 +124,6 @@ public class PlayResource {
         }
         return roundPlayDto;
     }
-
-    private static long cutOff(String dateString) throws ParseException {
-        TimeZone tz = TimeZone.getTimeZone("Europe/Stockholm");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setTimeZone(tz);
-        Date date = df.parse(dateString);
-
-        return date.getTime();
-    }
-
-    private static boolean isAfterCutOff(String dateString) {
-        long cutOff;
-        try {
-            cutOff = cutOff(dateString);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Illegal date string", e);
-        }
-        return cutOff < System.currentTimeMillis();
-    }
 }
+
 

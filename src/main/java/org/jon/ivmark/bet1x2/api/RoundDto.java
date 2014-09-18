@@ -8,4 +8,5 @@ public class RoundDto {
     public String name;
     public String cut_off;
     public List<GameDto> games;
+    public boolean completed;
 }
