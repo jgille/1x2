@@ -10,6 +10,18 @@
     padding-top: 15px;
 }
 
+.myplays td {
+    padding-right: 15px;
+}
+
+.myplays button {
+    margin-top: 15px;
+}
+
+.myplays legend {
+    padding-top: 15px;
+}
+
 .add-round {
     margin-top: 25px;
 }

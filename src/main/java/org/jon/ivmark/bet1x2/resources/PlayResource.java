@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
@@ -33,16 +34,34 @@ public class PlayResource {
 
     @GET
     public List<RoundPlayDto> getPlays(@Auth User user) {
-        logger.info("Getting plays");
+        logger.info("Getting plays for {}", user.username);
         List<RoundDto> rounds = roundRepository.getRounds();
         List<RoundPlayDto> plays = playRepository.getPlays(user);
         return merge(rounds, plays);
     }
 
     @POST
-    public Response saveRounds(@Auth User user, List<RoundDto> rounds) {
-        logger.info("Saving rounds");
-        roundRepository.saveRounds(rounds);
+    public Response savePlays(@Auth User user, List<RoundPlayDto> plays) {
+        logger.info("Saving plays for {}", user.username);
+        playRepository.savePlays(user, plays);
+        return Response.ok().build();
+    }
+
+    @PUT
+    public Response savePlay(@Auth User user, RoundPlayDto play) {
+        logger.info("Saving play for {}", user.username);
+        List<RoundPlayDto> plays = getPlays(user);
+
+        List<RoundPlayDto> toSave = new ArrayList<>(plays.size());
+        for (RoundPlayDto playDto : plays) {
+            if (playDto.round_id.equals(play.round_id)) {
+                toSave.add(play);
+            } else {
+                toSave.add(playDto);
+            }
+        }
+
+        savePlays(user, toSave);
         return Response.ok().build();
     }
 
@@ -85,7 +104,6 @@ public class PlayResource {
         for (GameDto gameDto : roundDto.games) {
             PlayDto play = new PlayDto();
             play.game = gameDto;
-            play.plays = "";
             roundPlayDto.plays.add(play);
         }
         return roundPlayDto;

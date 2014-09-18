@@ -8,7 +8,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
             name: 'Omgång X',
             cut_off: '2014-09-30 20:30:00'
         }
-    }
+    };
 
     $scope.data = {
         rounds: [
@@ -17,7 +17,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
 
     var getJwt = function () {
         return $cookies.jwt;
-    }
+    };
 
     var isUserLoggedIn = function () {
         var jwt = getJwt();
@@ -70,7 +70,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
         } else {
             $scope.greeting = '';
         }
-    }
+    };
 
     $scope.logout = function () {
         $cookies.jwt = '';
@@ -79,35 +79,34 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
 
     $scope.isAdmin = function () {
         return true;
-    }
+    };
 
     $scope.saveRounds = function () {
         $http.post('/api/rounds', $scope.data.rounds).success(function () {
         }).error(function () {
                 alert("Something went wrong!");
             });
-    }
-
+    };
 
     $scope.loadRounds = function () {
         $http.get('/api/rounds').success(function (data) {
             $scope.data.rounds = data;
         });
-    }
+    };
 
     $scope.loadMyPlays = function () {
         $http.get('/api/myplays').success(function (data) {
             $scope.data.myplays = data;
         });
-    }
+    };
 
     $scope.popRound = function () {
         $scope.data.rounds.pop();
-    }
+    };
 
     $scope.isLastRound = function (roundIndex) {
         return roundIndex === $scope.data.rounds.length - 1;
-    }
+    };
 
     $scope.addRound = function () {
         var games = [];
@@ -127,7 +126,16 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
                 games: games
             }
         );
-    }
+    };
+
+    $scope.savePlay = function (playIndex) {
+        $http.put('/api/myplays', $scope.data.myplays[playIndex])
+            .success(function () {
+            })
+            .error(function () {
+                alert("Something went wrong!");
+            });
+    };
 
     $scope.load();
 }

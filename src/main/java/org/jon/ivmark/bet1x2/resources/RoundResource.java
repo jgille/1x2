@@ -32,7 +32,7 @@ public class RoundResource {
 
     @POST
     public Response saveRounds(@Auth User user, List<RoundDto> rounds) {
-        logger.info("Saving rounds");
+        logger.info("Saving rounds, user: {}", user.username);
         repository.saveRounds(rounds);
         return Response.ok().build();
     }

@@ -1,5 +1,36 @@
 <div class="myplays container">
     <div ng-repeat="myplay in data.myplays">
-        Hello world {{$index}}
+        <fieldset>
+            <legend>{{myplay.name}}</legend>
+            <i>Sista speldatum: {{myplay.cut_off}}</i>
+            <table class="games">
+                <tr>
+                    <th colspan="4"></th>
+                    <th>1</th>
+                    <th>X</th>
+                    <th>2</th>
+                </tr>
+                <tr ng-repeat="play in myplay.plays">
+                    <td>{{ play.game.id }}.</td>
+                    <td>{{ play.game.home }}</td>
+                    <td>-</td>
+                    <td>{{ play.game.away }}</td>
+                    <div class="input-group">
+                        <td><input type="checkbox" ng-model="play.one"></td>
+                        <td><input type="checkbox" ng-model="play.x"></td>
+                        <td><input type="checkbox" ng-model="play.two"></td>
+                    </div>
+                    </td>
+                </tr>
+                <td colspan="7">
+                    <div class="pull-right">
+                        <button class="btn btn-primary" ng-click="savePlay($index)">
+                            Spara
+                        </button>
+                    </div>
+                </td>
+            </table>
+
+        </fieldset>
     </div>
 </div>
