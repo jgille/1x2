@@ -6,115 +6,12 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
         newRound: {
             numGames: 16,
             name: 'Omgång X',
-            cutOff: ''
+            cutOff: '2014-09-30 20:30:00'
         }
     }
 
     $scope.data = {
         rounds: [
-            {
-                round_id: '0',
-                cutOff: '',
-                name: 'CL Gruppspel, omgång 2',
-                games: [
-                    {
-                        id: '1',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '2',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '3',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '4',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '5',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '6',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '7',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '8',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '9',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '10',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '11',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '12',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '13',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '14',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '2'
-                    },
-                    {
-                        id: '15',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    },
-                    {
-                        id: '16',
-                        home: 'Hemmalag',
-                        away: 'Bortalag',
-                        result: '1'
-                    }
-                ]
-            }
         ]
     };
 
@@ -185,6 +82,14 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
         alert(JSON.stringify($scope.data.rounds[roundIndex]));
     }
 
+    $scope.popRound = function () {
+        $scope.data.rounds.pop();
+    }
+
+    $scope.isLastRound = function (roundIndex) {
+        return roundIndex === $scope.data.rounds.length - 1;
+    }
+
     $scope.addRound = function () {
         var games = [];
 
@@ -199,6 +104,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
             {
                 round_id: $scope.data.rounds.length + '',
                 name: $scope.input.newRound.name,
+                cutOff: $scope.input.newRound.cutOff,
                 games: games
             }
         );

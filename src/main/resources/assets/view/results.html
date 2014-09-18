@@ -35,7 +35,12 @@
                 </tr>
                 <tr ng-if="isAdmin()">
                     <td colspan="7">
-                        <button class="btn btn-primary pull-right" ng-click="saveRound($index)">Spara</button>
+                        <div class="pull-right">
+                            <button class="btn btn-primary" ng-click="saveRound($index)">Spara</button>
+                            <button ng-if="isLastRound($index)" class="btn btn-danger" ng-click="popRound()">
+                                Ta bort
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -51,12 +56,14 @@
 
         <div class="form-group">
             <label class="sr-only" for="numGames">Antal matcher</label>
-            <input id="numGames" ng-model="input.newRound.numGames" type="number" class="form-control" placeholder="Antal matcher">
+            <input id="numGames" ng-model="input.newRound.numGames" type="number" class="form-control"
+                   placeholder="Antal matcher">
         </div>
 
         <div class="form-group">
             <label class="sr-only" for="cut-off">Sista speldatum</label>
-            <input id="cut-off" ng-model="input.newRound.cutOff" type="text" class="form-control" placeholder="Sista speldatum">
+            <input id="cut-off" ng-model="input.newRound.cutOff" type="text" class="form-control"
+                   placeholder="Sista speldatum">
         </div>
 
         <button class="btn btn-success" ng-click="addRound()">Ny omgång</button>
