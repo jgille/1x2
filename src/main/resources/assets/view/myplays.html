@@ -1,6 +1,6 @@
 <div class="myplays container">
     <div ng-repeat="myplay in data.myplays">
-        <fieldset>
+        <fieldset ng-show="myplay.may_submit_play">
             <legend>{{myplay.name}}</legend>
             <i>Sista speldatum: {{myplay.cut_off}}</i>
             <table class="games">
