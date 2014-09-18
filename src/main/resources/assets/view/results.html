@@ -1,7 +1,8 @@
 <div class="results container">
     <div ng-repeat="round in data.rounds">
+        <input ng-if="isAdmin()" type="text" ng-model="round.name">
         <fieldset>
-            <legend>{{ round.name }}</legend>
+            <legend>{{round.name}}</legend>
             <table class="games">
                 <tr>
                     <th colspan="4"></th>
