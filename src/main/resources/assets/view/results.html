@@ -47,10 +47,12 @@
                         </div>
                     </td>
                 </tr>
-                <tr ng-if="isLastRound($index)">
+                <tr ng-if="isAdmin()">
                     <td colspan="7">
                         <div class="pull-right">
-                            <button class="btn btn-primary" ng-click="saveRounds()">Spara</button>
+                            <button ng-if="isLastRound($index)" class="btn btn-primary" ng-click="saveRounds()">
+                                Spara
+                            </button>
                         </div>
                     </td>
                 </tr>

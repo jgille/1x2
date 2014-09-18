@@ -66,6 +66,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
             $scope.greeting = 'Välkommen ' + json.username;
 
             $scope.loadRounds();
+            $scope.loadMyPlays();
         } else {
             $scope.greeting = '';
         }
@@ -87,9 +88,16 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
             });
     }
 
+
     $scope.loadRounds = function () {
         $http.get('/api/rounds').success(function (data) {
             $scope.data.rounds = data;
+        });
+    }
+
+    $scope.loadMyPlays = function () {
+        $http.get('/api/myplays').success(function (data) {
+            $scope.data.myplays = data;
         });
     }
 
@@ -124,3 +132,21 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
     $scope.load();
 }
 ]);
+
+
+app.factory('authInterceptor', function ($rootScope, $q, $window, $cookies) {
+    return {
+        request: function (config) {
+            config.headers = config.headers || {};
+            config.headers.Authorization = 'Bearer ' + $cookies.jwt;
+            return config;
+        }
+    };
+});
+
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+});
+
+
+

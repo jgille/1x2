@@ -9,7 +9,13 @@ app.config(function($routeProvider) {
             controller  : 'Bet1x2Controller'
         })
 
-        // route for the about page
+        // route for the my plays page
+        .when('/myplays', {
+            templateUrl : 'view/myplays.html',
+            controller  : 'Bet1x2Controller'
+        })
+
+        // route for the results page
         .when('/results', {
             templateUrl : 'view/results.html',
             controller  : 'Bet1x2Controller'

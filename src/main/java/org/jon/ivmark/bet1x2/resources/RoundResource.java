@@ -1,7 +1,9 @@
 package org.jon.ivmark.bet1x2.resources;
 
+import io.dropwizard.auth.Auth;
 import org.jon.ivmark.bet1x2.RoundRepository;
 import org.jon.ivmark.bet1x2.api.RoundDto;
+import org.jon.ivmark.bet1x2.login.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,7 @@ public class RoundResource {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-private final RoundRepository repository;
+    private final RoundRepository repository;
 
     public RoundResource(RoundRepository repository) {
         this.repository = repository;
@@ -29,7 +31,7 @@ private final RoundRepository repository;
     }
 
     @POST
-    public Response saveRounds(List<RoundDto> rounds) {
+    public Response saveRounds(@Auth User user, List<RoundDto> rounds) {
         logger.info("Saving rounds");
         repository.saveRounds(rounds);
         return Response.ok().build();
