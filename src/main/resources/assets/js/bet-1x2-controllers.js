@@ -2,10 +2,19 @@ var app = angular.module('bet1x2');
 
 app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $cookies) {
 
+    $scope.input = {
+        newRound: {
+            numGames: 16,
+            name: 'Omgång X',
+            cutOff: ''
+        }
+    }
+
     $scope.data = {
         rounds: [
             {
-                round_id: '1',
+                round_id: '0',
+                cutOff: '',
                 name: 'CL Gruppspel, omgång 2',
                 games: [
                     {
@@ -174,6 +183,25 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', function ($scope, $coo
 
     $scope.saveRound = function (roundIndex) {
         alert(JSON.stringify($scope.data.rounds[roundIndex]));
+    }
+
+    $scope.addRound = function () {
+        var games = [];
+
+        for (var i = 0; i < $scope.input.newRound.numGames; i++) {
+            games.push({
+                id: '' + (i + 1),
+                home: 'Hemmalag',
+                away: 'Bortalag'
+            });
+        }
+        $scope.data.rounds.push(
+            {
+                round_id: $scope.data.rounds.length + '',
+                name: $scope.input.newRound.name,
+                games: games
+            }
+        );
     }
 
     $scope.load();
