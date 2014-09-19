@@ -1,0 +1,19 @@
+<div class="toplist container">
+    <fieldset>
+        <legend>Topplista</legend>
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th ng-repeat="round in data.toplist.metadata.rounds">{{round}}</th>
+                <th>Totalt</th>
+            </tr>
+            <tr ng-repeat="toplistEntry in data.toplist.entries">
+                <td>{{toplistEntry.position}}.</td>
+                <td>{{toplistEntry.username}}</td>
+                <td ng-repeat="round in toplistEntry.rounds">{{round.correct}}</td>
+                <td>{{toplistEntry.total.correct}}</td>
+            </tr>
+        </table>
+    </fieldset>
+</div>

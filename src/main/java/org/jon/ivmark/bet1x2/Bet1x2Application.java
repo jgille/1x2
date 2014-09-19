@@ -18,6 +18,7 @@ import org.jon.ivmark.bet1x2.login.resources.LoginResource;
 import org.jon.ivmark.bet1x2.resources.AllPlaysResource;
 import org.jon.ivmark.bet1x2.resources.PlayResource;
 import org.jon.ivmark.bet1x2.resources.RoundResource;
+import org.jon.ivmark.bet1x2.resources.ToplistResource;
 
 public class Bet1x2Application extends Application<Bet1x2Config> {
 
@@ -52,6 +53,7 @@ public class Bet1x2Application extends Application<Bet1x2Config> {
         environment.jersey().register(new RoundResource(roundRepository));
         environment.jersey().register(new PlayResource(roundRepository, playRepository));
         environment.jersey().register(new AllPlaysResource(roundRepository, playRepository, environment.getObjectMapper()));
+        environment.jersey().register(new ToplistResource(roundRepository, playRepository));
 
         JwtAuthenticator jwtAuthenticator = new JwtAuthenticator(jwtSigner, environment.getObjectMapper());
         environment.jersey().register(new OAuthProvider<>(jwtAuthenticator, "realm"));

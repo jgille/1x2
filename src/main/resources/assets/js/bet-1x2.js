@@ -8,13 +8,18 @@ app.config(function($routeProvider) {
             controller  : 'Bet1x2Controller'
         })
 
-        .when('/myplays', {
+        .when('/my', {
             templateUrl : 'view/myplays.html',
             controller  : 'Bet1x2Controller'
         })
 
-        .when('/allplays', {
+        .when('/all', {
             templateUrl : 'view/allplays.html',
+            controller  : 'Bet1x2Controller'
+        })
+
+        .when('/toplist', {
+            templateUrl : 'view/toplist.html',
             controller  : 'Bet1x2Controller'
         })
 

@@ -10,6 +10,18 @@
     padding-top: 15px;
 }
 
+.toplist td {
+    padding-right: 25px;
+}
+
+.toplist th {
+    padding-right: 25px;
+}
+
+.toplist legend {
+    padding-top: 15px;
+}
+
 .myplays td {
     padding-right: 15px;
 }

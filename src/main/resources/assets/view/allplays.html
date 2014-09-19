@@ -9,12 +9,12 @@
             </div>
         </ul>
     </div>
-    <h4>{{data.rounds[data.allplays.selectedRound].name}}</h4>
+    <h4>{{data.rounds[data.selectedRound].name}}</h4>
     <div ng-repeat="(username, rows) in data.allplays">
         {{ username }}
 
         <div ng-repeat="row in rows">
-            <table ng-show="data.allplays.selectedRound == $index" class="games">
+            <table ng-show="data.selectedRound == $index" class="games">
                 <tr>
                     <th colspan="4"></th>
                     <th>1</th>

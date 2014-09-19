@@ -33,7 +33,7 @@ public class AllPlaysResource {
 
         for (Map.Entry<String, List<RoundPlayDto>> e : allPlays.entrySet()) {
             String username = e.getKey();
-            List<RoundPlayDto> plays = PlayResource.merge(rounds, e.getValue());
+            List<RoundPlayDto> plays = RoundDto.merge(rounds, e.getValue());
             List<RoundPlayDto> completed = new ArrayList<>();
             for (RoundPlayDto playDto : plays) {
                 if (playDto.may_submit_play) {
