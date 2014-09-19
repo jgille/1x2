@@ -5,7 +5,7 @@
             <tr>
                 <th></th>
                 <th></th>
-                <th ng-repeat="round in data.toplist.metadata.rounds"><a href="#/all" ng-click="selectRound($index)">{{round}}</a></th>
+                <th ng-repeat="round in data.toplist.metadata.rounds"><a href="#/all?round={{$index}}">{{round}}</a></th>
                 <th>Totalt</th>
             </tr>
             <tr ng-repeat="toplistEntry in data.toplist.entries">
