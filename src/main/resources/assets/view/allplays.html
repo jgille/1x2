@@ -5,48 +5,52 @@
         </button>
         <ul class="dropdown-menu" role="menu">
             <div ng-repeat="round in data.rounds">
-                <li ng-show="round.completed"><div ng-click="selectRound($index)">{{round.name}}</div></li>
+                <li ng-show="round.completed">
+                    <div ng-click="selectRound($index)">{{round.name}}</div>
+                </li>
             </div>
         </ul>
     </div>
-    <h4>{{data.rounds[data.selectedRound].name}}</h4>
+    <h3>{{data.rounds[data.selectedRound].name}}</h3>
+
     <div ng-repeat="(username, rows) in data.allplays">
-        {{ username }}
+        <fieldset>
+            <legend>{{ username }}</legend>
+            <div ng-repeat="row in rows">
+                <table ng-show="data.selectedRound == $index" class="games">
+                    <tr>
+                        <th colspan="4"></th>
+                        <th>1</th>
+                        <th>X</th>
+                        <th>2</th>
+                    </tr>
+                    <tr ng-repeat="play in row.plays">
+                        <td>{{ play.game.id }}.</td>
+                        <td>{{ play.game.home }}</td>
+                        <td>-</td>
+                        <td>{{ play.game.away }}</td>
+                        <div class="input-group">
+                            <td>
+                                <div ng-class="(play.game.result=='1') ? 'correct' : ''">
+                                    <input type="checkbox" ng-disabled="true" ng-model="play.one">
+                                </div>
+                            </td>
 
-        <div ng-repeat="row in rows">
-            <table ng-show="data.selectedRound == $index" class="games">
-                <tr>
-                    <th colspan="4"></th>
-                    <th>1</th>
-                    <th>X</th>
-                    <th>2</th>
-                </tr>
-                <tr ng-repeat="play in row.plays">
-                    <td>{{ play.game.id }}.</td>
-                    <td>{{ play.game.home }}</td>
-                    <td>-</td>
-                    <td>{{ play.game.away }}</td>
-                    <div class="input-group">
-                        <td>
-                            <div ng-class="(play.game.result=='1') ? 'correct' : ''">
-                                <input type="checkbox" ng-disabled="true" ng-model="play.one">
-                            </div>
+                            <td>
+                                <div ng-class="(play.game.result=='X') ? 'correct' : ''">
+                                    <input type="checkbox" ng-disabled="true" ng-model="play.x">
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-class="(play.game.result=='2') ? 'correct' : ''">
+                                    <input type="checkbox" ng-disabled="true" ng-model="play.two">
+                                </div>
+                            </td>
+                        </div>
                         </td>
-
-                        <td>
-                            <div ng-class="(play.game.result=='X') ? 'correct' : ''">
-                                <input type="checkbox" ng-disabled="true" ng-model="play.x">
-                            </div>
-                        </td>
-                        <td>
-                            <div ng-class="(play.game.result=='2') ? 'correct' : ''">
-                                <input type="checkbox" ng-disabled="true" ng-model="play.two">
-                            </div>
-                        </td>
-                    </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
     </div>
 </div>
