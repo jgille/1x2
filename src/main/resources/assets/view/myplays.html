@@ -1,6 +1,12 @@
 <div class="myplays container">
+    <table>
+        <tr>
+            <td><label>Visa även tidigare rader</label></td>
+            <td><input type="checkbox" ng-model="myplays.showAll"></td>
+        </tr>
+    </table>
     <div ng-repeat="myplay in data.myplays">
-        <fieldset ng-hide="!myplay.may_submit_play">
+        <fieldset ng-hide="!myplays.showAll && !myplay.may_submit_play">
             <legend>{{myplay.name}}</legend>
             <i>Sista speldatum: {{myplay.cut_off}}</i>
             <table class="games">
@@ -39,7 +45,8 @@
                     <td colspan="3">Antal rader: {{numPlayedRows($index)}}</td>
                     <td colspan="4">
                         <div class="pull-right">
-                            <button ng-disabled="mayNotSubmitPlay($index)" class="btn btn-primary"
+                            <button ng-hide="!myplay.may_submit_play" ng-disabled="mayNotSubmitPlay($index)"
+                                    class="btn btn-success"
                                     ng-click="savePlay($index)">
                                 Spara
                             </button>

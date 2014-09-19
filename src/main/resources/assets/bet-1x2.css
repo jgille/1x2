@@ -43,6 +43,11 @@
     padding-top: 15px;
 }
 
+.allplays .dropdown {
+    padding-left: 50px;
+    padding-top: 10px;
+}
+
 .correct {
     background: #449D44;
 }

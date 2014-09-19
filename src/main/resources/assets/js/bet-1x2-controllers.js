@@ -95,6 +95,11 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
     $scope.loadRounds = function () {
         $http.get('/api/rounds').success(function (data) {
             $scope.data.rounds = data;
+            var hasCompletedRounds = false;
+            for (var i = 0; i < data.length; i++) {
+                hasCompletedRounds = data[i].completed || hasCompletedRounds;
+            }
+            $scope.data.hasCompletedRounds = hasCompletedRounds;
         });
     };
 
@@ -113,7 +118,7 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', function ($sc
     $scope.loadAllPlays = function () {
         $http.get('/api/allplays').success(function (data) {
             $scope.data.allplays = data;
-            $scope.selectRound(0);
+            $scope.selectRound(Math.max(0, $scope.selectedRound));
         });
     };
 
