@@ -67,14 +67,15 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', '$location',
             if ($scope.isLoggedIn === true) {
                 var token = getJwt();
                 var json = JSON.parse(decodeBase64(token.split('.')[1]));
-                $scope.greeting = 'Välkommen ' + json.username;
+                $scope.username = json.username;
+                $scope.isAdmin = json.isAdmin;
+                $scope.data.team = $scope.username;
 
                 $scope.loadRounds();
                 $scope.loadMyPlays();
                 $scope.loadToplist();
                 $scope.loadAllPlays();
-            } else {
-                $scope.greeting = '';
+                $scope.loadTeam();
             }
         };
 
@@ -83,8 +84,23 @@ app.controller('Bet1x2Controller', ['$scope', '$cookies', '$http', '$location',
             $scope.load();
         };
 
-        $scope.isAdmin = function () {
-            return true;
+        $scope.saveTeam = function () {
+            $("body").css("cursor", "wait");
+            $scope.save = "Sparar...";
+            $http.post('/api/team', $scope.data.team).success(function () {
+                $scope.save = "Spara";
+                $("body").css("cursor", "default");
+            }).error(function () {
+                    $scope.save = "Spara";
+                    $("body").css("cursor", "default");
+                    alert("Something went wrong!");
+                });
+        };
+
+        $scope.loadTeam = function () {
+            $http.get('/api/team').success(function (data) {
+                $scope.data.team = data;
+            });
         };
 
         $scope.saveRounds = function () {

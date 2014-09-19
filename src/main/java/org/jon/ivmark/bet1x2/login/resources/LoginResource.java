@@ -37,6 +37,7 @@ public class LoginResource {
             logger.info("Dev mode on localhost");
 
             User user = new User();
+            user.isAdmin = true;
             user.username = "Developer 2";
 
             NewCookie cookie = jwtService.userCookie(user);

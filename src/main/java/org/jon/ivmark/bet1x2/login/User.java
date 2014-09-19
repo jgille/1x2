@@ -4,6 +4,7 @@ import java.util.List;
 
 public class User {
 
+    public boolean isAdmin;
     public String username;
     public List<String> groups;
 }

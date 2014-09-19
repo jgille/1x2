@@ -53,6 +53,7 @@ public class AuthenticatorResource {
         User user = new User();
         user.username = account.getUsername();
         user.groups = new ArrayList<>();
+        user.isAdmin = user.username.startsWith("jon.ivmark");
         for (Group group : account.getGroups()) {
              user.groups.add(group.getName());
         }

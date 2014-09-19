@@ -1,6 +1,6 @@
 <div class="results container">
     <div ng-repeat="round in data.rounds">
-        <div class="nameAndCutOff" ng-show="isAdmin()">
+        <div class="nameAndCutOff" ng-show="isAdmin">
             <input type="text" ng-model="round.name">
             <input type="text" ng-model="round.cut_off">
         </div>
@@ -14,7 +14,7 @@
                     <th>X</th>
                     <th>2</th>
                 </tr>
-                <tr ng-show="isAdmin()" ng-repeat="game in round.games">
+                <tr ng-show="isAdmin" ng-repeat="game in round.games">
                     <td>{{ game.id }}.</td>
                     <td><input type="text" ng-model="game.home"/></td>
                     <td>-</td>
@@ -26,7 +26,7 @@
                     </div>
                     </td>
                 </tr>
-                <tr ng-show="!isAdmin()" ng-repeat="game in round.games">
+                <tr ng-show="!isAdmin" ng-repeat="game in round.games">
                     <td>{{ game.id }}.</td>
                     <td>{{ game.home }}</td>
                     <td>-</td>
@@ -38,7 +38,7 @@
                     </div>
                     </td>
                 </tr>
-                <tr ng-show="isAdmin()">
+                <tr ng-show="isAdmin">
                     <td colspan="7">
                         <div class="pull-right">
                             <button ng-show="isLastRound($index)" class="btn btn-danger" ng-click="popRound()">
@@ -47,7 +47,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr ng-show="isAdmin()">
+                <tr ng-show="isAdmin">
                     <td colspan="7">
                         <div class="pull-right">
                             <button ng-show="isLastRound($index)" class="btn btn-primary" ng-click="saveRounds()">
@@ -61,7 +61,7 @@
         </fieldset>
     </div>
 
-    <form ng-show="isAdmin()" class="form-inline add-round" role="form">
+    <form ng-show="isAdmin" class="form-inline add-round" role="form">
         <div class="form-group">
             <label class="sr-only" for="roundName">Namn</label>
             <input id="roundName" ng-model="input.newRound.name" type="text" class="form-control" placeholder="Namn">

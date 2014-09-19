@@ -26,7 +26,13 @@ app.config(function($routeProvider) {
         .when('/results', {
             templateUrl : 'view/results.html',
             controller  : 'Bet1x2Controller'
-        });
+        })
+
+        .when('/settings', {
+            templateUrl : 'view/settings.html',
+            controller  : 'Bet1x2Controller'
+        })
+
 });
 
 app.run();
